@@ -1,13 +1,7 @@
 {
   "mcpServers": {
     "aimp-stats": {
-      "command": "python",
-      "args": [
-        "-c",
-        "import sys,urllib.request;url='https://raw.githubusercontent.com/gg8023ly-crypto/aimp-stats-mcp/main/aimp_stats_mcp.py';code=urllib.request.urlopen(url,timeout=20).read();sys.argv=['aimp_stats_mcp.py']+sys.argv[1:];exec(compile(code,url,'exec'),{'__name__':'__main__','__file__':url})",
-        "--base-url",
-        "http://192.168.0.102:8765"
-      ]
+      "url": "http://192.168.0.102:8765/mcp"
     }
   }
 }

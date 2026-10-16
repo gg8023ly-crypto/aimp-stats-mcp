@@ -1,22 +1,16 @@
 # AIMP Stats MCP
 
-Standalone read-only MCP connector for AIMP usage statistics.
+Remote read-only MCP connector for AIMP usage statistics. The preferred endpoint is Streamable HTTP and requires no local Python installation.
 
 ## Direct MCP Config
 
-Use this config in Codex, OpenClaw, or another MCP-capable agent:
+Use this config in OpenClaw or another JSON-configured MCP client:
 
 ```json
 {
   "mcpServers": {
     "aimp-stats": {
-      "command": "python",
-      "args": [
-        "-c",
-        "import sys,urllib.request;url='https://raw.githubusercontent.com/gg8023ly-crypto/aimp-stats-mcp/main/aimp_stats_mcp.py';code=urllib.request.urlopen(url,timeout=20).read();sys.argv=['aimp_stats_mcp.py']+sys.argv[1:];exec(compile(code,url,'exec'),{'__name__':'__main__','__file__':url})",
-        "--base-url",
-        "http://192.168.0.102:8765"
-      ]
+      "url": "http://192.168.0.102:8765/mcp"
     }
   }
 }
@@ -28,10 +22,15 @@ Config link:
 https://raw.githubusercontent.com/gg8023ly-crypto/aimp-stats-mcp/main/aimp_stats_mcp.remote.json
 ```
 
-Script link:
+Codex TOML:
 
-```text
-https://raw.githubusercontent.com/gg8023ly-crypto/aimp-stats-mcp/main/aimp_stats_mcp.py
+```powershell
+codex mcp add aimp-stats --url http://192.168.0.102:8765/mcp
 ```
 
-The connector only calls the AIMP statistics HTTP API. It does not connect to any database and does not expose write operations.
+```toml
+[mcp_servers.aimp-stats]
+url = "http://192.168.0.102:8765/mcp"
+```
+
+The endpoint exposes read-only statistics tools and no write operations. `aimp_stats_mcp.py` and `aimp_stats_mcp.stdio.json` remain available as a Python-based fallback for clients without Streamable HTTP support.
